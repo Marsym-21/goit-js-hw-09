@@ -11,14 +11,7 @@ const ref = {
   second: document.querySelector('span[data-seconds]'),
 };
 ref.startBtn.setAttribute('disabled', '');
-ref.input.addEventListener('input', getValue);
 ref.startBtn.addEventListener('click', timer);
-const delay = 1000;
-
-function getValue(event) {
-  const checkedDate = new Date(event.target.value);
-  options.onClose(checkedDate);
-}
 
 const options = {
   enableTime: true,
@@ -27,26 +20,20 @@ const options = {
   minuteIncrement: 1,
   minDate: 'today',
   onClose(selectedDates) {
-    this.differenceNumber = selectedDates - this.defaultDate;
-    console.log(this.differenceNumber);
+    console.log(selectedDates);
+    console.log(this.defaultDate.getTime());
 
-    if (this.differenceNumber < 0) {
-      if (!ref.startBtn.hasAttribute('disabled')) {
-        ref.startBtn.setAttribute('disabled', '');
-      }
-      return window.alert('Please choose a date in the future');
-    }
-    ref.startBtn.removeAttribute('disabled');
-    convertMs(this.differenceNumber);
+    // if (differenceNumber > 0) {
+    //   ref.startBtn.removeAttribute('disabled');
+    // }
+    // return window.alert('Please choose a date in the future');
   },
 };
+console.log(options.defaultDate);
+console.log(options.onClose);
 
-flatpickr(ref.input, { options });
-// console.log(localStorage.getItem('DATA_INPUT'));
-// const differenceData = localStorage.getItem('DATA_INPUT');
-// console.log(differenceData);
-
-// convertMs(differenceData);
+const datePickr = flatpickr(ref.input, { options });
+console.log(datePickr.selectedDates[0].getTime());
 
 function convertMs(ms) {
   console.log(ms);
