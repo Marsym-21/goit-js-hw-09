@@ -19,7 +19,7 @@ const options = {
   defaultDate: new Date(),
   minuteIncrement: 1,
   minDate: 'today',
-  onClose(selectedDates) {
+  onClose: function (selectedDates) {
     console.log(selectedDates);
     console.log(this.defaultDate.getTime());
     const differenceNumber =
@@ -34,7 +34,7 @@ console.log(options.defaultDate);
 console.log(options.onClose);
 
 const datePickr = flatpickr(ref.input, { options });
-datePickr.selectedDates[0].getTime();
+// datePickr.selectedDates[0].getTime();
 
 function convertMs(ms) {
   console.log(ms);
