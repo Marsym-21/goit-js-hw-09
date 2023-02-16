@@ -42,6 +42,7 @@ flatpickr(ref.input, { options });
 
 function getValue(event) {
   checkedDate = new Date(event.target.value);
+
   console.log(checkedDate);
 }
 console.log(checkedDate);
