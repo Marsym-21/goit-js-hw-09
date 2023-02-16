@@ -22,18 +22,19 @@ const options = {
   onClose(selectedDates) {
     console.log(selectedDates);
     console.log(this.defaultDate.getTime());
-
-    // if (differenceNumber > 0) {
-    //   ref.startBtn.removeAttribute('disabled');
-    // }
-    // return window.alert('Please choose a date in the future');
+    const differenceNumber =
+      selectedDates[0].getTime() - this.defaultDate.getTime();
+    if (differenceNumber > 0) {
+      ref.startBtn.removeAttribute('disabled');
+    }
+    return window.alert('Please choose a date in the future');
   },
 };
 console.log(options.defaultDate);
 console.log(options.onClose);
 
 const datePickr = flatpickr(ref.input, { options });
-console.log(datePickr.selectedDates[0].getTime());
+datePickr.selectedDates[0].getTime();
 
 function convertMs(ms) {
   console.log(ms);
