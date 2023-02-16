@@ -1,7 +1,7 @@
 import flatpickr from 'flatpickr';
 import 'flatpickr/dist/flatpickr.min.css';
 import Notiflix from 'notiflix';
-
+localStorageReset();
 const ref = {
   input: document.querySelector('#datetime-picker'),
   startBtn: document.querySelector('button[data-start]'),
@@ -12,9 +12,13 @@ const ref = {
 };
 ref.startBtn.setAttribute('disabled', '');
 ref.input.addEventListener('input', getValue);
-ref.startBtn.addEventListener('click', countdown);
+ref.startBtn.addEventListener('click', convertMs);
 const delay = 1000;
-let checkedDate = 0;
+
+function getValue(event) {
+  const checkedDate = new Date(event.target.value);
+  options.onClose(checkedDate);
+}
 
 const options = {
   enableTime: true,
@@ -22,7 +26,6 @@ const options = {
   defaultDate: new Date(),
   minuteIncrement: 1,
   minDate: 'today',
-
   onClose(selectedDates) {
     const differenceNumber = selectedDates - this.defaultDate;
 
@@ -33,24 +36,21 @@ const options = {
       return window.alert('Please choose a date in the future');
     }
     ref.startBtn.removeAttribute('disabled');
-    console.log(this.differenceNumber);
-    convertMs(differenceNumber);
+    console.log(differenceNumber);
+    localStorage.setItem('DATA_INPUT', `${differenceNumber}`);
   },
 };
 
 flatpickr(ref.input, { options });
+console.log(localStorage.getItem('DATA_INPUT'));
+const differenceData = localStorage.getItem('DATA_INPUT');
+console.log(differenceData);
 
-function getValue(event) {
-  checkedDate = new Date(event.target.value);
-
-  console.log(checkedDate);
-}
-console.log(checkedDate);
-options.onClose(checkedDate);
+convertMs(differenceData);
 
 function convertMs(ms) {
-  countdown(ms);
   console.log(ms);
+  timer(ms);
 
   const second = 1000;
   const minute = second * 60;
@@ -88,11 +88,12 @@ function addLeadingZero(value) {
   return value;
 }
 
-function countdown(time) {
-  let timeNumber = Number(time);
-  // console.log(timeNumber);
-  timeNumber = timeNumber - 1000;
-  // console.log(typeof timeNumber);
+function timer(time) {
+  console.log(time);
+  time -= time;
+  console.log(time);
 }
 
-// setInterval(countdown, delay);
+function localStorageReset() {
+  localStorage.removeItem('DATA_INPUT');
+}
