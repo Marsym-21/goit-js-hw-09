@@ -30,7 +30,7 @@ const options = {
     return window.alert('Please choose a date in the future');
   },
 };
-console.log(options.defaultDate);
+console.log(options.defaultDate.getTime());
 console.log(options.onClose);
 
 const datePickr = flatpickr(ref.input, { options });
