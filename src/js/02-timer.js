@@ -6,11 +6,7 @@ const ref = {
   startBtn: document.querySelector('button[data-start]'),
 };
 
-ref.input.addEventListener('input', setAttributeBtn);
-function setAttributeBtn() {
-  console.log('what a fuck ?');
-  ref.startBtn.setAttribute('disabled', '');
-}
+console.log('what a fuck ?');
 
 const options = {
   enableTime: true,
