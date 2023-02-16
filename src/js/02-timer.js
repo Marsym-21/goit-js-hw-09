@@ -1,7 +1,7 @@
 import flatpickr from 'flatpickr';
 import 'flatpickr/dist/flatpickr.min.css';
 import Notiflix from 'notiflix';
-localStorageReset();
+
 const ref = {
   input: document.querySelector('#datetime-picker'),
   startBtn: document.querySelector('button[data-start]'),
@@ -12,7 +12,7 @@ const ref = {
 };
 ref.startBtn.setAttribute('disabled', '');
 ref.input.addEventListener('input', getValue);
-ref.startBtn.addEventListener('click', convertMs);
+ref.startBtn.addEventListener('click', timer);
 const delay = 1000;
 
 function getValue(event) {
@@ -27,26 +27,26 @@ const options = {
   minuteIncrement: 1,
   minDate: 'today',
   onClose(selectedDates) {
-    const differenceNumber = selectedDates - this.defaultDate;
+    this.differenceNumber = selectedDates - this.defaultDate;
+    console.log(this.differenceNumber);
 
-    if (differenceNumber < 0) {
+    if (this.differenceNumber < 0) {
       if (!ref.startBtn.hasAttribute('disabled')) {
         ref.startBtn.setAttribute('disabled', '');
       }
       return window.alert('Please choose a date in the future');
     }
     ref.startBtn.removeAttribute('disabled');
-    console.log(differenceNumber);
-    localStorage.setItem('DATA_INPUT', `${differenceNumber}`);
+    convertMs(this.differenceNumber);
   },
 };
 
 flatpickr(ref.input, { options });
-console.log(localStorage.getItem('DATA_INPUT'));
-const differenceData = localStorage.getItem('DATA_INPUT');
-console.log(differenceData);
+// console.log(localStorage.getItem('DATA_INPUT'));
+// const differenceData = localStorage.getItem('DATA_INPUT');
+// console.log(differenceData);
 
-convertMs(differenceData);
+// convertMs(differenceData);
 
 function convertMs(ms) {
   console.log(ms);
@@ -89,11 +89,6 @@ function addLeadingZero(value) {
 }
 
 function timer(time) {
+  time -= 1000;
   console.log(time);
-  time -= time;
-  console.log(time);
-}
-
-function localStorageReset() {
-  localStorage.removeItem('DATA_INPUT');
 }
