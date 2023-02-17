@@ -34,16 +34,16 @@ const options = {
 
 const datePickr = flatpickr(ref.input, options);
 
-let timerId;
+let timerId = null;
 
 function getReightTime() {
   let differenceDate =
     datePickr.selectedDates[0].getTime() - datePickr.now.getTime();
 
   timerId = setInterval(() => {
-    differenceDate -= 1000;
+    differenceDate -= delay;
     convertMs(differenceDate);
-  }, 1000);
+  }, delay);
   // ref.startBtn.setAttribute('disabled', '');
 }
 
