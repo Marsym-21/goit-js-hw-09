@@ -27,7 +27,7 @@ const options = {
       ref.startBtn.setAttribute('disabled', '');
       return Notiflix.Notify.failure('Please choose a date in the future');
     } else {
-      Notiflix.Notify.success('Well done, good job !');
+      Notiflix.Notify.success('Very good, сlick on "START" !');
     }
   },
 };
@@ -44,7 +44,7 @@ function getReightTime() {
     differenceDate -= 1000;
     convertMs(differenceDate);
   }, 1000);
-  ref.startBtn.setAttribute('disabled', '');
+  // ref.startBtn.setAttribute('disabled', '');
 }
 
 function convertMs(ms) {
@@ -79,6 +79,7 @@ function convertMs(ms) {
     clearTimeout(timerId);
     ref.body.style.backgroundColor = 'tomato';
   }
+
   return { days, hours, minutes, seconds };
 }
 
