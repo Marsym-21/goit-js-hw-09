@@ -18,22 +18,25 @@ const options = {
   time_24hr: true,
   defaultDate: new Date(),
   minuteIncrement: 1,
-  minDate: 'today',
   onClose: function (selectedDates) {
-    console.log(selectedDates);
-    console.log(this.defaultDate.getTime());
-    // const differenceNumber =
-    //   selectedDates[0].getTime() - this.defaultDate.getTime();
-    // if (differenceNumber > 0) {
-    //   ref.startBtn.removeAttribute('disabled');
-    // }
-    // return window.alert('Please choose a date in the future');
+    const differenceNumber = selectedDates[0].getTime() - this.now.getTime();
+    console.log(differenceNumber);
+    ref.startBtn.removeAttribute('disabled');
+    if (differenceNumber < 0) {
+      ref.startBtn.setAttribute('disabled', '');
+      return window.alert('Please choose a date in the future');
+    }
   },
 };
-const datePickr = flatpickr(ref.input, { options });
+const datePickr = flatpickr(ref.input, options);
+
 console.log(datePickr);
-console.log(datePickr.selectedDates);
+console.log(datePickr.selectedDates[0]);
 console.log(datePickr.now);
+
+const differenceDate =
+  datePickr.selectedDates[0].getTime() - datePickr.now.getTime();
+console.log(differenceDate);
 
 function convertMs(ms) {
   console.log(ms);
