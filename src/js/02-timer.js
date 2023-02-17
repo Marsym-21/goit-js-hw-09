@@ -22,9 +22,12 @@ const options = {
   onClose: function (selectedDates) {
     const differenceNumber = selectedDates[0].getTime() - this.now.getTime();
     ref.startBtn.removeAttribute('disabled');
+
     if (differenceNumber < 0) {
       ref.startBtn.setAttribute('disabled', '');
       return Notiflix.Notify.failure('Please choose a date in the future');
+    } else {
+      Notiflix.Notify.success('Well done, good job !');
     }
   },
 };
