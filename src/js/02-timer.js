@@ -9,10 +9,11 @@ const ref = {
   hour: document.querySelector('span[data-hours]'),
   minute: document.querySelector('span[data-minutes]'),
   second: document.querySelector('span[data-seconds]'),
+  body: document.querySelector('body'),
 };
 ref.startBtn.setAttribute('disabled', '');
-ref.startBtn.addEventListener('click', timer);
-
+ref.startBtn.addEventListener('click', getReightTime);
+const delay = 1000;
 const options = {
   enableTime: true,
   time_24hr: true,
@@ -20,28 +21,30 @@ const options = {
   minuteIncrement: 1,
   onClose: function (selectedDates) {
     const differenceNumber = selectedDates[0].getTime() - this.now.getTime();
-    console.log(differenceNumber);
     ref.startBtn.removeAttribute('disabled');
     if (differenceNumber < 0) {
       ref.startBtn.setAttribute('disabled', '');
-      return window.alert('Please choose a date in the future');
+      return Notiflix.Notify.failure('Please choose a date in the future');
     }
   },
 };
+
 const datePickr = flatpickr(ref.input, options);
 
-console.log(datePickr);
-console.log(datePickr.selectedDates[0].getTime());
-console.log(datePickr.now.getTime());
+let timerId;
 
-const differenceDate =
-  datePickr.selectedDates[0].getTime() - datePickr.now.getTime();
-console.log(differenceDate);
+function getReightTime() {
+  let differenceDate =
+    datePickr.selectedDates[0].getTime() - datePickr.now.getTime();
+
+  timerId = setInterval(() => {
+    differenceDate -= 1000;
+    convertMs(differenceDate);
+  }, 1000);
+  ref.startBtn.setAttribute('disabled', '');
+}
 
 function convertMs(ms) {
-  console.log(ms);
-  timer(ms);
-
   const second = 1000;
   const minute = second * 60;
   const hour = minute * 60;
@@ -63,7 +66,16 @@ function convertMs(ms) {
   ref.hour.textContent = values.hours;
   ref.minute.textContent = values.minutes;
   ref.second.textContent = values.seconds;
-
+  const allTime =
+    ref.day.textContent +
+    ref.hour.textContent +
+    ref.minute.textContent +
+    ref.second.textContent;
+  if (allTime === '00000000') {
+    console.log('STOP');
+    clearTimeout(timerId);
+    ref.body.style.backgroundColor = 'tomato';
+  }
   return { days, hours, minutes, seconds };
 }
 
@@ -71,14 +83,9 @@ function addLeadingZero(value) {
   for (const key in value) {
     const string = String(value[key]);
     const length = string.length;
-    if (length < 2) {
+    if (length === 1) {
       value[key] = string.padStart(2, '0');
     }
   }
   return value;
-}
-
-function timer(time) {
-  time -= 1000;
-  console.log(time);
 }
