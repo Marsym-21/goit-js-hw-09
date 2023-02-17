@@ -31,8 +31,8 @@ const options = {
 const datePickr = flatpickr(ref.input, options);
 
 console.log(datePickr);
-console.log(datePickr.selectedDates[0]);
-console.log(datePickr.now);
+console.log(datePickr.selectedDates[0].getTime());
+console.log(datePickr.now.getTime());
 
 const differenceDate =
   datePickr.selectedDates[0].getTime() - datePickr.now.getTime();
