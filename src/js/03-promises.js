@@ -1,4 +1,5 @@
 const form = document.querySelector('.form');
+const startBtn = document.querySelector('button');
 form.addEventListener('input', checkedInputValue);
 form.addEventListener('submit', clickSubmit);
 
@@ -7,6 +8,13 @@ function checkedInputValue(event) {
   const name = event.target.name;
   const value = event.target.value;
   formData[name] = value;
+  if (value > 0) {
+    startBtn.removeAttribute('disabled');
+  }
+  if (value < 0) {
+    startBtn.setAttribute('disabled', '');
+    return alert('Please enter data greater than 0!');
+  }
 }
 let timerId = 0;
 let timer = 0;
